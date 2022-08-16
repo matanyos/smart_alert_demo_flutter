@@ -127,14 +127,23 @@ class _LoginWidgetState extends State<LoginWidget> {
               ),
             ),
           ),
-          const Expanded(
-            child: FittedBox(child: Padding(
-              padding: EdgeInsets.all(200),
-              child: Footer(isLoginPage: true),
-            )),
+           Expanded(
+            child: FittedBox(
+              child: getFooterWithPadding()),
           )      
         ],
       );
+  }
+
+  Padding getFooterWithPadding() {
+      double value =(defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) 
+      ? 50
+      : 200;
+      
+    return Padding(
+            padding: EdgeInsets.all(value),
+            child: const Footer(isLoginPage: true),
+          );
   }
 
 
