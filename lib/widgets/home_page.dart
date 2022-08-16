@@ -1,8 +1,6 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:smart_alert_demo_flutter/widgets/footer.dart';
 import 'package:smart_alert_demo_flutter/widgets/navigation_drawer.dart';
+import 'package:smart_alert_demo_flutter/widgets/widgets_helper.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({Key? key}) : super(key: key);
@@ -13,6 +11,7 @@ class HomePage extends StatefulWidget{
 
 class HomePageState extends State<HomePage>
 {
+  AppMenuItem currentMenuItem = AppMenuItem.myProgress;
   @override
   Widget build(BuildContext context)
   {
@@ -27,9 +26,10 @@ class HomePageState extends State<HomePage>
           backgroundColor: const Color.fromARGB(255,26,34,37),
           toolbarHeight: 50,
         ),
-        drawer: const NavigationDrawer(),);
+        drawer: NavigationDrawer(onMenuItemChanged: (item) => setState(()=> currentMenuItem = item)));
   }
 }
+
 class FullScreenHomePage extends StatefulWidget {
   const FullScreenHomePage({Key? key}) : super(key: key);
 
@@ -38,29 +38,37 @@ class FullScreenHomePage extends StatefulWidget {
 }
 
 class _FullScreenHomePageState extends State<FullScreenHomePage> {
+
+  AppMenuItem currentMenuItem = AppMenuItem.myProgress;
+  
   @override
   Widget build(BuildContext context) => Scaffold(
     body: Row(
       children: [
-         const NavigationDrawer(),
-         Expanded(
-           child: Container(color: Colors.grey.shade200,
-             child: Column(
-               mainAxisAlignment: MainAxisAlignment.spaceAround,
-               children: [
-                 Expanded(flex: 4,
-                    child: Container(color: Colors.amber,child: const Text('TEXT'),)),
-                const Expanded(flex: 1,
-                  child:  FittedBox(
-                    child: Padding(
-                    padding: EdgeInsets.all(50),
-                    child: Footer(isLoginPage: false),
-                  )))
-                   
-             ],),
-           ),
-         ),
+         NavigationDrawer(onMenuItemChanged: (item) => setState(()=> currentMenuItem = item)),
+         getWidgetView(menuItem: currentMenuItem),
       ]
     )
   );
+
+  Widget getWidgetView({required AppMenuItem menuItem})
+  {
+    if(menuItem == AppMenuItem.myProgress)
+      {    
+        return WidgetHelper.getMyProgressView();
+      }
+      else if(menuItem == AppMenuItem.profile)
+      {
+        return const Text('Profile');
+      }
+      else if(menuItem == AppMenuItem.users)
+      {
+        return const Text('Users');
+      }
+      else
+      {
+        return const Text('Sync');
+      }
+  }
+
 } 
