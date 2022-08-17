@@ -15,7 +15,7 @@ class PasswordTextFieldState extends State<PasswordTextField> {
   TextEditingController passwordTextFieldController;
   PasswordTextFieldState({required this.passwordTextFieldController});
   final textFieldFocusNode = FocusNode();
-  bool obscured = false;
+  bool obscured = true;
 
   void toggleObscured() {
     setState(() {

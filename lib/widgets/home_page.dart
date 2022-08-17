@@ -17,16 +17,15 @@ class HomePageState extends State<HomePage>
   {
       return Scaffold(
         appBar:AppBar(
-          title: Container(alignment: Alignment.center,
-          child: Center(
-            child: SizedBox(
-              height: 50,
-              child: Image.asset('assets/logo.png')),
-          )),
+          title: Image.asset('assets/logo.png',height: 60),
+          centerTitle: true,
           backgroundColor: const Color.fromARGB(255,26,34,37),
           toolbarHeight: 50,
         ),
-        drawer: NavigationDrawer(onMenuItemChanged: (item) => setState(()=> currentMenuItem = item)));
+        body: Container(
+          color: Colors.grey.shade200,
+          child: Column(children: [WidgetHelper.getWidgetView(menuItem: currentMenuItem,context: context)])),
+        drawer: const NavigationDrawer());
   }
 }
 
@@ -45,30 +44,10 @@ class _FullScreenHomePageState extends State<FullScreenHomePage> {
   Widget build(BuildContext context) => Scaffold(
     body: Row(
       children: [
-         NavigationDrawer(onMenuItemChanged: (item) => setState(()=> currentMenuItem = item)),
-         getWidgetView(menuItem: currentMenuItem),
+         const NavigationDrawer(),
+         Expanded(child: Container(color: Colors.grey.shade200, child: WidgetHelper.getWidgetView(menuItem: currentMenuItem,context: context))),
       ]
     )
   );
-
-  Widget getWidgetView({required AppMenuItem menuItem})
-  {
-    if(menuItem == AppMenuItem.myProgress)
-      {    
-        return WidgetHelper.getMyProgressView();
-      }
-      else if(menuItem == AppMenuItem.profile)
-      {
-        return const Text('Profile');
-      }
-      else if(menuItem == AppMenuItem.users)
-      {
-        return const Text('Users');
-      }
-      else
-      {
-        return const Text('Sync');
-      }
-  }
 
 } 

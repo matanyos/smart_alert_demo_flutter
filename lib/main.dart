@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_alert_demo_flutter/navigation_provider.dart';
 import 'package:smart_alert_demo_flutter/widgets/login_widget.dart';
 
 void main() {
-  runApp(const MaterialApp(
-    home: SmartAlertDemoApp(),
-    title: "Smart Alert | Minuendo",
-    ));
+  runApp(ChangeNotifierProvider(
+    create:(context)=> NavigationProvider(),
+    child: const MaterialApp(
+      home: SmartAlertDemoApp(),
+      title: "Smart Alert | Minuendo",
+      ),
+  ));
 }
 
 class SmartAlertDemoApp extends StatelessWidget {

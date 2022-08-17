@@ -17,6 +17,7 @@ const Footer({Key? key, required this.isLoginPage}) : super(key: key);
                         await launchUrl(Uri(scheme: 'mailto',path:'support@minuendo.com'));
                        },
                       style: ButtonStyle(
+                        elevation: MaterialStateProperty.all<double>(0),
                           backgroundColor:
                               MaterialStateProperty.all<Color>(isLoginPage ?Colors.transparent:Colors.grey.shade200),
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -35,6 +36,7 @@ const Footer({Key? key, required this.isLoginPage}) : super(key: key);
                         Utilities.openBrowserUrl(url: url);
                       },
                       style: ButtonStyle(
+                        elevation: MaterialStateProperty.all<double>(0),
                           backgroundColor:
                               MaterialStateProperty.all<Color>(isLoginPage ?Colors.transparent:Colors.grey.shade200),
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
