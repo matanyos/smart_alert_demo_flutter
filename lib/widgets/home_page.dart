@@ -20,7 +20,7 @@ class HomePageState extends State<HomePage>
           title: Image.asset('assets/logo.png',height: 60),
           centerTitle: true,
           backgroundColor: const Color.fromARGB(255,26,34,37),
-          toolbarHeight: 50,
+          toolbarHeight:70,
         ),
         body: Container(
           color: Colors.grey.shade200,

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_alert_demo_flutter/navigation_provider.dart';
 import 'package:smart_alert_demo_flutter/widgets/footer.dart';
@@ -11,7 +12,7 @@ import 'my_progress_view.dart';
 class WidgetHelper {
   static Widget buildHeader(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top / 2),
         child: Container(
           height: 90,
           color: const Color.fromARGB(255, 26, 34, 37),
@@ -30,7 +31,7 @@ class WidgetHelper {
         createMenuItem(
             title: 'MY PROGRESS',
             menuItem: AppMenuItem.myProgress,
-            icon: Icons.dataset_rounded,
+            icon: Icons.assessment,
             context: context),
         const SizedBox(height: 20),
         createMenuItem(
@@ -72,6 +73,8 @@ class WidgetHelper {
             menuItem: AppMenuItem.logOut,
             icon: Icons.logout,
             onTapFunction: () {
+              var storage = const FlutterSecureStorage();
+              storage.delete(key: 'token');
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => const SmartAlertDemoApp()));
             },
@@ -137,7 +140,6 @@ class WidgetHelper {
 
   static Widget getWidgetView(
       {required AppMenuItem menuItem, required BuildContext context}) {
-
     final provider = Provider.of<NavigationProvider>(context);
     final currentItem = provider.navigationItem;
 
@@ -152,14 +154,18 @@ class WidgetHelper {
     }
   }
 
-  static Widget getViewsFooter() {
-    return const Expanded(
-        flex: 1,
-        child: FittedBox(
-            child: Padding(
-          padding: EdgeInsets.fromLTRB(70,100,70,0),
-          child: Footer(isLoginPage: false),
-        )));
+  static Widget getFooterWithPadding({required bool isLogin, required BuildContext context}) {
+    double value = (defaultTargetPlatform == TargetPlatform.iOS ||
+            defaultTargetPlatform == TargetPlatform.android)
+        ? MediaQuery.of(context).size.width/5
+        : 200;
+
+    return FittedBox(
+      child: Padding(
+        padding: EdgeInsets.all(value),
+        child: Footer(isLoginPage: isLogin),
+      ),
+    );
   }
 }
 
