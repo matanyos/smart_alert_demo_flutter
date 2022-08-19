@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_alert_demo_flutter/navigation_provider.dart';
 import 'package:smart_alert_demo_flutter/widgets/footer.dart';
@@ -73,8 +73,8 @@ class WidgetHelper {
             menuItem: AppMenuItem.logOut,
             icon: Icons.logout,
             onTapFunction: () {
-              var storage = const FlutterSecureStorage();
-              storage.delete(key: 'token');
+              var box = Hive.box('myBox');
+              box.delete('token');
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => const SmartAlertDemoApp()));
             },
@@ -154,10 +154,11 @@ class WidgetHelper {
     }
   }
 
-  static Widget getFooterWithPadding({required bool isLogin, required BuildContext context}) {
+  static Widget getFooterWithPadding(
+      {required bool isLogin, required BuildContext context}) {
     double value = (defaultTargetPlatform == TargetPlatform.iOS ||
             defaultTargetPlatform == TargetPlatform.android)
-        ? MediaQuery.of(context).size.width/5
+        ? MediaQuery.of(context).size.width / 12
         : 200;
 
     return FittedBox(

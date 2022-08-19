@@ -35,17 +35,16 @@ class _ForgetPasswordWidgetState extends State<ForgetPasswordWidget> {
         backgroundColor: const Color.fromARGB(255, 26, 34, 37),
         toolbarHeight: 180,
       ),
-      body:
-          Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      body: Column(children: [
         Center(
           child: Container(
             constraints: const BoxConstraints(maxWidth: 380),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 70, 20, 20),
+              padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
               child: Column(
                 children: [
-                  const Text('Requrest new password',
-                      style: TextStyle(color: Colors.white, fontSize: 22)),
+                  const Text('Request new password',
+                      style: TextStyle(color: Colors.white, fontSize: 20)),
                   const SizedBox(height: 30),
                   const Align(
                     alignment: Alignment.centerLeft,
@@ -108,7 +107,7 @@ class _ForgetPasswordWidgetState extends State<ForgetPasswordWidget> {
                   const Text('OR',
                       style: TextStyle(color: Colors.white, fontSize: 22)),
                   Padding(
-                    padding: const EdgeInsets.only(top: 50),
+                    padding: const EdgeInsets.only(top: 30),
                     child: SizedBox(
                       width: 320,
                       height: 50,
