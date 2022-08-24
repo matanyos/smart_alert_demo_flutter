@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:smart_alert_demo_flutter/navigation_provider.dart';
 import 'package:smart_alert_demo_flutter/utilities.dart';
 import 'package:smart_alert_demo_flutter/widgets/home_page.dart';
-import 'package:smart_alert_demo_flutter/widgets/login_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:smart_alert_demo_flutter/widgets/login_widget.dart';
 import 'Models/login_respone.dart';
 import 'encryptor.dart';
 
@@ -22,7 +22,7 @@ void main() async {
   runApp(ChangeNotifierProvider(
     create: (context) => NavigationProvider(),
     child: MaterialApp(
-      home: isValid ? homePage : const SmartAlertDemoApp(),
+      home: isValid ? homePage : const LoginWidget(),
       title: "Smart Alert | Minuendo",
     ),
   ));
@@ -41,13 +41,4 @@ Future<bool> checkAccessToken() async {
   return await Utilities.isSuccessHttpRequest(
       token: userInfo.authenticationToken.toString(),
       userId: userInfo.userId.toString());
-}
-
-class SmartAlertDemoApp extends StatelessWidget {
-  const SmartAlertDemoApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const LoginWidget();
-  }
 }

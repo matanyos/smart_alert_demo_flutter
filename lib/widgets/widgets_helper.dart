@@ -4,8 +4,8 @@ import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_alert_demo_flutter/navigation_provider.dart';
 import 'package:smart_alert_demo_flutter/widgets/footer.dart';
+import 'package:smart_alert_demo_flutter/widgets/login_widget.dart';
 
-import '../main.dart';
 import '../utilities.dart';
 import 'my_progress_view.dart';
 
@@ -75,8 +75,8 @@ class WidgetHelper {
             onTapFunction: () {
               var box = Hive.box('myBox');
               box.delete('token');
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => const SmartAlertDemoApp()));
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const LoginWidget()));
             },
             context: context),
       ],
