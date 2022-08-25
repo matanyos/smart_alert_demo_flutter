@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_alert_demo_flutter/utilities.dart';
+import 'package:smart_alert_demo_flutter/utilitites/utilities.dart';
 import 'package:smart_alert_demo_flutter/widgets/login_widget.dart';
 import 'package:smart_alert_demo_flutter/widgets/widgets_helper.dart';
 

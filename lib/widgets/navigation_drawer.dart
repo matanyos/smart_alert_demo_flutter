@@ -3,32 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:smart_alert_demo_flutter/widgets/widgets_helper.dart';
 
 class NavigationDrawer extends StatelessWidget {
-
-
-    const NavigationDrawer({Key? key}) : super(key: key);
+  const NavigationDrawer({Key? key}) : super(key: key);
   @override
-    Widget build(BuildContext context) 
-{
-  double widthValue = (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android) ? 300 : 400;
+  Widget build(BuildContext context) {
+    double widthValue = (defaultTargetPlatform == TargetPlatform.iOS ||
+            defaultTargetPlatform == TargetPlatform.android)
+        ? 300
+        : 400;
 
     return Drawer(
-    width: widthValue,
-      child:Container(
-        color:const Color.fromARGB(255,26,34,37),
-        child: ListView(
-          children: [
-              Column(
-                children:[
-                    WidgetHelper.buildHeader(context),
-                    Column(
-                      children: [
-                         Padding(
-                            padding: const EdgeInsets.only(top:30),
-                            child: WidgetHelper.buildMenuItems(context)),
-              ],
-            ),])
-          ],),
-      ));
+        width: widthValue,
+        child: Container(
+          alignment: Alignment.centerLeft,
+          color: const Color.fromARGB(255, 26, 34, 37),
+          child: ListView(
+            children: [
+              Column(children: [
+                WidgetHelper.buildHeader(context),
+                Column(
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.only(top: 30),
+                        child: WidgetHelper.buildMenuItems(context)),
+                  ],
+                ),
+              ])
+            ],
+          ),
+        ));
+  }
 }
-
-} 

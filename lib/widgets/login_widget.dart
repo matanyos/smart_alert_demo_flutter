@@ -1,9 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_alert_demo_flutter/utilities.dart';
+import 'package:smart_alert_demo_flutter/utilitites/utilities.dart';
 import 'package:smart_alert_demo_flutter/widgets/forget_password_widget.dart';
 import 'package:smart_alert_demo_flutter/widgets/password_field_text.dart';
 import 'package:smart_alert_demo_flutter/widgets/widgets_helper.dart';
+import '../router/router.dart';
 
 class LoginWidget extends StatefulWidget {
   final String? emailDefaultValue;
@@ -28,6 +29,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Container(
             alignment: Alignment.center,
             child: Column(children: [
@@ -150,18 +152,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       width: 320,
                       height: 50,
                       child: ElevatedButton(
-                          onPressed: () async {
-                            if (emailTextFieldController.text != '' &&
-                                passwordTextFieldController.text != '') {
-                              if (await Utilities.tryLogin(
-                                  email: emailTextFieldController.text,
-                                  password: passwordTextFieldController.text)) {
-                                Utilities.navigateToHomePage(context);
-                              } else {
-                                setState(() => wrongCredintials = true);
-                              }
-                            }
-                          },
+                          onPressed: onLoginButtonPressed,
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Colors.red.shade400),
@@ -185,5 +176,18 @@ class _LoginWidgetState extends State<LoginWidget> {
       ]),
       backgroundColor: const Color.fromARGB(255, 28, 34, 37),
     );
+  }
+
+  onLoginButtonPressed() async {
+    if (emailTextFieldController.text != '' &&
+        passwordTextFieldController.text != '') {
+      if (await Utilities.tryLogin(
+          email: emailTextFieldController.text,
+          password: passwordTextFieldController.text)) {
+        Navigator.of(context).pushReplacementNamed(RouterManager.homePage);
+      } else {
+        setState(() => wrongCredintials = true);
+      }
+    }
   }
 }

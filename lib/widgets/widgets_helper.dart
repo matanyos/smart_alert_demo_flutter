@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_alert_demo_flutter/navigation_provider.dart';
+import 'package:smart_alert_demo_flutter/utilitites/navigation_provider.dart';
 import 'package:smart_alert_demo_flutter/widgets/footer.dart';
 import 'package:smart_alert_demo_flutter/widgets/login_widget.dart';
 
-import '../utilities.dart';
+import '../utilitites/utilities.dart';
 import 'my_progress_view.dart';
 
 class WidgetHelper {
@@ -106,34 +106,37 @@ class WidgetHelper {
       padding: EdgeInsets.only(left: leftPadding),
       child: Material(
         color: Colors.transparent,
-        child: ListTile(
-            shape: const RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.horizontal(left: Radius.circular(50))),
-            leading: Icon(icon,
-                color: isSelected ? Colors.red : Colors.white,
-                size: isSelected ? 40 : 35),
-            title: Text(title,
-                style: TextStyle(
-                    fontSize: fontSize,
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.bold,
-                    color: isSelected
-                        ? const Color.fromARGB(255, 26, 34, 37)
-                        : Colors.white)),
-            selected: isSelected,
-            selectedTileColor: Colors.grey.shade200,
-            onTap: () {
-              if (onTapFunction != null) {
-                onTapFunction.call();
-              } else {
-                if (defaultTargetPlatform == TargetPlatform.iOS ||
-                    defaultTargetPlatform == TargetPlatform.android) {
-                  Navigator.pop(context);
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: ListTile(
+              shape: const RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.horizontal(left: Radius.circular(50))),
+              leading: Icon(icon,
+                  color: isSelected ? Colors.red : Colors.white,
+                  size: isSelected ? 40 : 35),
+              title: Text(title,
+                  style: TextStyle(
+                      fontSize: fontSize,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.bold,
+                      color: isSelected
+                          ? const Color.fromARGB(255, 26, 34, 37)
+                          : Colors.white)),
+              selected: isSelected,
+              selectedTileColor: Colors.grey.shade200,
+              onTap: () {
+                if (onTapFunction != null) {
+                  onTapFunction.call();
+                } else {
+                  if (defaultTargetPlatform == TargetPlatform.iOS ||
+                      defaultTargetPlatform == TargetPlatform.android) {
+                    Navigator.pop(context);
+                  }
+                  provider.setCurrentAppMenuItem(menuItem);
                 }
-                provider.setCurrentAppMenuItem(menuItem);
-              }
-            }),
+              }),
+        ),
       ),
     );
   }
@@ -156,14 +159,12 @@ class WidgetHelper {
 
   static Widget getFooterWithPadding(
       {required bool isLogin, required BuildContext context}) {
-    double value = (defaultTargetPlatform == TargetPlatform.iOS ||
-            defaultTargetPlatform == TargetPlatform.android)
-        ? MediaQuery.of(context).size.width / 12
-        : MediaQuery.of(context).size.width / 15;
+    double value = MediaQuery.of(context).size.width / 12;
 
     return FittedBox(
+      alignment: Alignment.bottomCenter,
       child: Padding(
-        padding: EdgeInsets.all(value),
+        padding: EdgeInsets.fromLTRB(value, value, value, value / 2),
         child: Footer(isLoginPage: isLogin),
       ),
     );

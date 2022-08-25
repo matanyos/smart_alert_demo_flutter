@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:smart_alert_demo_flutter/widgets/widgets_helper.dart';
 
@@ -10,11 +9,11 @@ class MyProgressViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         FittedBox(
           child: Container(
+            alignment: Alignment.center,
             margin: EdgeInsets.all(MediaQuery.of(context).size.width / 15),
             color: Colors.white,
             child: Column(
@@ -74,7 +73,7 @@ class MyProgressViewWidget extends StatelessWidget {
                 ),
                 Container(
                   color: Colors.blue,
-                  child: const Text('data'),
+                  child: const SizedBox(child: Text('data')),
                 )
               ],
             ),
@@ -88,7 +87,7 @@ class MyProgressViewWidget extends StatelessWidget {
 
 // ignore: must_be_immutable
 class CustomElevatedButton extends StatefulWidget {
-  late String text='';
+  late String text = '';
   late double fontSize = 0;
   late double elevation = 0;
 
@@ -103,7 +102,6 @@ class CustomElevatedButton extends StatefulWidget {
   State<CustomElevatedButton> createState() => _CustomElevatedButtonState();
 }
 
-
 class _CustomElevatedButtonState extends State<CustomElevatedButton> {
   bool isPressed = false;
 
@@ -112,10 +110,16 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
     return ElevatedButton(
       style: ButtonStyle(
           elevation: MaterialStateProperty.all<double>(widget.elevation),
-          backgroundColor: MaterialStateProperty.all<Color>(
-              isPressed?Colors.white: const Color.fromARGB(255, 26, 34, 37))),
-      child: Text(widget.text, style: TextStyle(fontSize: widget.fontSize,color: isPressed? const Color.fromARGB(255, 26, 34, 37):Colors.white)),
-      onPressed: () => {setState(()=>isPressed = true)},
+          backgroundColor: MaterialStateProperty.all<Color>(isPressed
+              ? Colors.white
+              : const Color.fromARGB(255, 26, 34, 37))),
+      child: Text(widget.text,
+          style: TextStyle(
+              fontSize: widget.fontSize,
+              color: isPressed
+                  ? const Color.fromARGB(255, 26, 34, 37)
+                  : Colors.white)),
+      onPressed: () => {setState(() => isPressed = true)},
     );
   }
 }
