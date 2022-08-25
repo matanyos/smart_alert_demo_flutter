@@ -159,7 +159,7 @@ class WidgetHelper {
     double value = (defaultTargetPlatform == TargetPlatform.iOS ||
             defaultTargetPlatform == TargetPlatform.android)
         ? MediaQuery.of(context).size.width / 12
-        : 200;
+        : MediaQuery.of(context).size.width / 15;
 
     return FittedBox(
       child: Padding(
