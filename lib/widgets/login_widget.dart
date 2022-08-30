@@ -4,6 +4,7 @@ import 'package:smart_alert_demo_flutter/utilitites/platform_info.dart';
 import 'package:smart_alert_demo_flutter/utilitites/utilities.dart';
 import 'package:smart_alert_demo_flutter/widgets/forget_password_widget.dart';
 import 'package:smart_alert_demo_flutter/widgets/password_field_text.dart';
+import 'package:smart_alert_demo_flutter/widgets/smart_alert_app_bar.dart';
 import 'package:smart_alert_demo_flutter/widgets/widgets_helper.dart';
 import '../router/router.dart';
 
@@ -30,21 +31,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Container(
-              alignment: Alignment.center,
-              child: Column(children: [
-                SizedBox(height: 100, child: Image.asset('assets/icon.png')),
-                const Text("Smart Alert",
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        letterSpacing: 1,
-                        fontSize: 26)),
-              ])),
-          backgroundColor: const Color.fromARGB(255, 26, 34, 37),
-          toolbarHeight: 180,
-        ),
+        appBar: const SmartAlertAppBar(),
         body: Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
