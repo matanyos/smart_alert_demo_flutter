@@ -61,14 +61,22 @@ class Footer extends StatelessWidget {
                                 ? Colors.black54
                                 : Colors.white)))),
             icon: Icon(
-              Icons.support_rounded,
+              Icons.favorite_outline,
               size: 12,
               color: Colors.red.shade400,
             ),
-            label: Text('Support',
-                style: TextStyle(
-                    fontSize: 10,
-                    color: !isLoginPage ? Colors.black54 : Colors.white))),
+            label: Row(
+              children: [
+                Text('Support',
+                    style: TextStyle(
+                        fontSize: 10,
+                        color: !isLoginPage ? Colors.black54 : Colors.white)),
+                const SizedBox(width: 5),
+                Icon(Icons.open_in_new,
+                    size: 10,
+                    color: !isLoginPage ? Colors.black54 : Colors.white60)
+              ],
+            )),
         Text(
           'Support +99 88 88 44',
           style: TextStyle(

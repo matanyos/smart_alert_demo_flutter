@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_alert_demo_flutter/utilitites/navigation_provider.dart';
+import 'package:smart_alert_demo_flutter/utilitites/platform_info.dart';
 import 'package:smart_alert_demo_flutter/widgets/footer.dart';
 import 'package:smart_alert_demo_flutter/widgets/login_widget.dart';
 
@@ -26,6 +27,8 @@ class WidgetHelper {
   }
 
   static Widget buildMenuItems(BuildContext context) {
+    var isMobile = PlatformInfo(context).isMobile();
+    double spacing = isMobile ? 5 : 20;
     return Column(
       children: [
         createMenuItem(
@@ -33,31 +36,31 @@ class WidgetHelper {
             menuItem: AppMenuItem.myProgress,
             icon: Icons.assessment,
             context: context),
-        const SizedBox(height: 20),
+        SizedBox(height: spacing),
         createMenuItem(
             title: 'PROFILE',
             menuItem: AppMenuItem.profile,
             icon: Icons.person,
             context: context),
-        const SizedBox(height: 20),
+        SizedBox(height: spacing),
         createMenuItem(
             title: 'USERS',
             menuItem: AppMenuItem.users,
             icon: Icons.people,
             context: context),
-        const SizedBox(height: 40),
+        SizedBox(height: spacing * 2),
         const Divider(color: Colors.white),
-        const SizedBox(height: 40),
+        SizedBox(height: spacing * 2),
         createMenuItem(
             title: 'Sync',
             menuItem: AppMenuItem._sync,
             icon: Icons.sync,
             context: context),
-        const SizedBox(height: 20),
+        SizedBox(height: spacing),
         createMenuItem(
             title: 'Support',
             menuItem: AppMenuItem.support,
-            icon: Icons.support,
+            icon: Icons.favorite_outline,
             onTapFunction: () {
               final Uri url = Uri(
                   scheme: 'https',
@@ -66,17 +69,17 @@ class WidgetHelper {
                   query: 'utm_medium=link&utm_source=url');
               Utilities.openBrowserUrl(url: url);
             },
-            context: context),
-        const SizedBox(height: 20),
+            context: context,
+            support: true),
+        SizedBox(height: spacing),
         createMenuItem(
             title: 'Log out',
             menuItem: AppMenuItem.logOut,
             icon: Icons.logout,
-            onTapFunction: () {
-              var box = Hive.box('myBox');
-              box.delete('token');
+            onTapFunction: () async {
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => const LoginWidget()));
+              await Hive.box('myBox').delete('userInfo');
             },
             context: context),
       ],
@@ -88,11 +91,12 @@ class WidgetHelper {
       required AppMenuItem menuItem,
       Function? onTapFunction,
       required IconData icon,
-      required BuildContext context}) {
+      required BuildContext context,
+      bool support = false}) {
     double fontSize = (defaultTargetPlatform == TargetPlatform.iOS ||
             defaultTargetPlatform == TargetPlatform.android)
-        ? 16
-        : 22;
+        ? 15
+        : 20;
     double leftPadding = (defaultTargetPlatform == TargetPlatform.iOS ||
             defaultTargetPlatform == TargetPlatform.android)
         ? 20
@@ -109,20 +113,30 @@ class WidgetHelper {
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: ListTile(
+              visualDensity: const VisualDensity(vertical: 4),
+              hoverColor: Colors.white10,
               shape: const RoundedRectangleBorder(
                   borderRadius:
                       BorderRadius.horizontal(left: Radius.circular(50))),
               leading: Icon(icon,
                   color: isSelected ? Colors.red : Colors.white,
                   size: isSelected ? 40 : 35),
-              title: Text(title,
-                  style: TextStyle(
-                      fontSize: fontSize,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.bold,
-                      color: isSelected
-                          ? const Color.fromARGB(255, 26, 34, 37)
-                          : Colors.white)),
+              title: Row(
+                children: [
+                  Text(title,
+                      style: TextStyle(
+                          fontSize: fontSize,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.bold,
+                          color: isSelected
+                              ? const Color.fromARGB(255, 26, 34, 37)
+                              : Colors.white)),
+                  if (support) const SizedBox(width: 10),
+                  if (support)
+                    const Icon(Icons.open_in_new,
+                        color: Colors.white70, size: 20)
+                ],
+              ),
               selected: isSelected,
               selectedTileColor: Colors.grey.shade200,
               onTap: () {
@@ -159,14 +173,13 @@ class WidgetHelper {
 
   static Widget getFooterWithPadding(
       {required bool isLogin, required BuildContext context}) {
-    double value = MediaQuery.of(context).size.width / 12;
+    var screenSize = PlatformInfo(context).getScreenSize();
+    double width = screenSize.width / 12;
+    double height = screenSize.width / 12;
 
-    return FittedBox(
-      alignment: Alignment.bottomCenter,
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(value, value, value, value / 2),
-        child: Footer(isLoginPage: isLogin),
-      ),
+    return Padding(
+      padding: EdgeInsets.fromLTRB(height, width, width, height / 3),
+      child: Footer(isLoginPage: isLogin),
     );
   }
 }

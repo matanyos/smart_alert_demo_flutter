@@ -20,13 +20,9 @@ class NavigationDrawer extends StatelessWidget {
             children: [
               Column(children: [
                 WidgetHelper.buildHeader(context),
-                Column(
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: WidgetHelper.buildMenuItems(context)),
-                  ],
-                ),
+                Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: WidgetHelper.buildMenuItems(context)),
               ])
             ],
           ),

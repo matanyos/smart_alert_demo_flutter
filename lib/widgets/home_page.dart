@@ -36,10 +36,8 @@ class HomePageState extends State<HomePage> {
           ),
           body: Container(
               color: Colors.grey.shade200,
-              child: Column(children: [
-                WidgetHelper.getWidgetView(
-                    menuItem: currentMenuItem, context: context)
-              ])),
+              child: WidgetHelper.getWidgetView(
+                  menuItem: currentMenuItem, context: context)),
           drawer: const NavigationDrawer());
     }
   }

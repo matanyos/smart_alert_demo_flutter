@@ -9,77 +9,84 @@ class MyProgressViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        FittedBox(
-          child: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.all(MediaQuery.of(context).size.width / 15),
-            color: Colors.white,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CustomElevatedButton(text: 'DAY'),
-                    const SizedBox(
-                      width: 1,
-                    ),
-                    CustomElevatedButton(text: 'WEEK'),
-                    const SizedBox(
-                      width: 1,
-                    ),
-                    CustomElevatedButton(text: 'MONTH'),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                          elevation: MaterialStateProperty.all<double>(0),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.grey.shade400)),
-                      onPressed: () => {},
-                      child: const Icon(
-                        Icons.arrow_back,
-                        size: 20,
+        Expanded(
+          child: FittedBox(
+            alignment: Alignment.topCenter,
+            child: Container(
+              margin: EdgeInsets.all(MediaQuery.of(context).size.width / 15),
+              color: Colors.white,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CustomElevatedButton(text: 'DAY'),
+                      const SizedBox(
+                        width: 1,
                       ),
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                          elevation: MaterialStateProperty.all<double>(0),
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.white)),
-                      onPressed: () => {},
-                      child: Text(
-                        DateTime.now().toString(),
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 18),
+                      CustomElevatedButton(text: 'WEEK'),
+                      const SizedBox(
+                        width: 1,
                       ),
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                          elevation: MaterialStateProperty.all<double>(0),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.grey.shade400)),
-                      onPressed: () => {},
-                      child: const Icon(
-                        Icons.arrow_forward,
-                        size: 20,
+                      CustomElevatedButton(text: 'MONTH'),
+                      const SizedBox(
+                        width: 10,
                       ),
-                    ),
-                  ],
-                ),
-                Container(
-                  color: Colors.blue,
-                  child: const SizedBox(child: Text('data')),
-                )
-              ],
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            elevation: MaterialStateProperty.all<double>(0),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.grey.shade400)),
+                        onPressed: () => {},
+                        child: const Icon(
+                          Icons.arrow_back,
+                          size: 20,
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            elevation: MaterialStateProperty.all<double>(0),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white)),
+                        onPressed: () => {},
+                        child: Text(
+                          DateTime.now().toString(),
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 18),
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            elevation: MaterialStateProperty.all<double>(0),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.grey.shade400)),
+                        onPressed: () => {},
+                        child: const Icon(
+                          Icons.arrow_forward,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    color: Colors.blue,
+                    child: const SizedBox(child: Text('data')),
+                  )
+                ],
+              ),
             ),
           ),
         ),
-        WidgetHelper.getFooterWithPadding(isLogin: false, context: context)
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: FittedBox(
+            child: WidgetHelper.getFooterWithPadding(
+                isLogin: false, context: context),
+          ),
+        )
       ],
     );
   }
