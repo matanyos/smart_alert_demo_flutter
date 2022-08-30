@@ -16,29 +16,33 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     if (defaultTargetPlatform != TargetPlatform.iOS &&
         defaultTargetPlatform != TargetPlatform.android) {
-      return Scaffold(
-          body: Row(children: [
-        const NavigationDrawer(),
-        Expanded(
-            flex: 5,
-            child: Container(
+      return SafeArea(
+        child: Scaffold(
+            body: Row(children: [
+          const NavigationDrawer(),
+          Expanded(
+              flex: 5,
+              child: Container(
+                  color: Colors.grey.shade200,
+                  child: WidgetHelper.getWidgetView(
+                      menuItem: currentMenuItem, context: context))),
+        ])),
+      );
+    } else {
+      return SafeArea(
+        child: Scaffold(
+            appBar: AppBar(
+              title: Image.asset('assets/logo.png', height: 60),
+              centerTitle: true,
+              backgroundColor: const Color.fromARGB(255, 26, 34, 37),
+              toolbarHeight: 70,
+            ),
+            body: Container(
                 color: Colors.grey.shade200,
                 child: WidgetHelper.getWidgetView(
-                    menuItem: currentMenuItem, context: context))),
-      ]));
-    } else {
-      return Scaffold(
-          appBar: AppBar(
-            title: Image.asset('assets/logo.png', height: 60),
-            centerTitle: true,
-            backgroundColor: const Color.fromARGB(255, 26, 34, 37),
-            toolbarHeight: 70,
-          ),
-          body: Container(
-              color: Colors.grey.shade200,
-              child: WidgetHelper.getWidgetView(
-                  menuItem: currentMenuItem, context: context)),
-          drawer: const NavigationDrawer());
+                    menuItem: currentMenuItem, context: context)),
+            drawer: const NavigationDrawer()),
+      );
     }
   }
 }

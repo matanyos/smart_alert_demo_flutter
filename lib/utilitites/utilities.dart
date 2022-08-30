@@ -36,16 +36,20 @@ class Utilities {
 
   static Future<bool> tryLogin(
       {required String email, required String password}) async {
-    var response = await Utilities.acquireAccessToken(
-        User(email: email, password: password));
-    var box = Hive.box('myBox');
+    try {
+      var response = await Utilities.acquireAccessToken(
+          User(email: email, password: password));
+      var box = Hive.box('myBox');
 
-    if (response?.authenticationToken == null) return false;
+      if (response?.authenticationToken == null) return false;
 
-    var encrypted = Encryptor().encrypt(value: jsonEncode(response));
-    await box.put('userInfo', encrypted);
+      var encrypted = Encryptor().encrypt(value: jsonEncode(response));
+      await box.put('userInfo', encrypted);
 
-    return true;
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   static tryRequestNewPassword({required String email}) async {
