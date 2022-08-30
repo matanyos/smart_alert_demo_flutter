@@ -34,7 +34,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         title: Container(
             alignment: Alignment.center,
             child: Column(children: [
-              SizedBox(height: 100, child: Image.asset('assets/logo.png')),
+              SizedBox(height: 100, child: Image.asset('assets/icon.png')),
               const Text("Smart Alert",
                   style: TextStyle(
                       fontFamily: 'Montserrat',

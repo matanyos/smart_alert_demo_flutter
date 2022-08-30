@@ -1,15 +1,15 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_alert_demo_flutter/utilitites/platform_info.dart';
 import 'package:smart_alert_demo_flutter/widgets/widgets_helper.dart';
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    double widthValue = (defaultTargetPlatform == TargetPlatform.iOS ||
-            defaultTargetPlatform == TargetPlatform.android)
-        ? 300
-        : 400;
+    var platformInfo = PlatformInfo(context);
+    double widthValue = platformInfo.isMobile()
+        ? 0.8 * platformInfo.getScreenSize().width
+        : 0.2 * platformInfo.getScreenSize().width;
 
     return Drawer(
         width: widthValue,
