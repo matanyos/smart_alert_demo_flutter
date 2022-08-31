@@ -1,21 +1,24 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:smart_alert_demo_flutter/utilitites/navigation_provider.dart';
-import 'package:smart_alert_demo_flutter/router/router.dart';
-import 'package:smart_alert_demo_flutter/utilitites/utilities.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:smart_alert_demo_flutter/routes/authentication_guard.dart';
+import 'package:smart_alert_demo_flutter/routes/router.gr.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+Future<void> main() async {
+  await Hive.initFlutter();
+  runApp(const MyApp());
+}
 
-  var canAccess = await Utilities.checkAccessToken();
+final appRouter = AppRouter(authGuard: AuthGuard());
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => NavigationProvider(),
-    child: MaterialApp(
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
       title: "Smart Alert | Minuendo",
-      initialRoute:
-          canAccess ? RouterManager.homePage : RouterManager.loginPage,
-      onGenerateRoute: RouterManager.generateRoute,
-    ),
-  ));
+      routerDelegate: AutoRouterDelegate(appRouter),
+      routeInformationParser: appRouter.defaultRouteParser(),
+    );
+  }
 }

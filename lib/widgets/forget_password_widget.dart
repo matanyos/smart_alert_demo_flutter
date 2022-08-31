@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:smart_alert_demo_flutter/utilitites/platform_info.dart';
 import 'package:smart_alert_demo_flutter/utilitites/utilities.dart';
-import 'package:smart_alert_demo_flutter/widgets/login_widget.dart';
-import 'package:smart_alert_demo_flutter/widgets/smart_alert_app_bar.dart';
-import 'package:smart_alert_demo_flutter/widgets/widgets_helper.dart';
+import 'package:smart_alert_demo_flutter/widgets/sub_widgets/smart_alert_app_bar.dart';
+import 'package:smart_alert_demo_flutter/utilitites/widgets_helper.dart';
+import 'main_pages/login_page.dart';
 
 class ForgetPasswordWidget extends StatefulWidget {
   const ForgetPasswordWidget({
@@ -86,10 +86,8 @@ class _ForgetPasswordWidgetState extends State<ForgetPasswordWidget> {
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => LoginWidget(
-                                                emailDefaultValue:
-                                                    emailTextFieldController
-                                                        .text)));
+                                            builder: (context) =>
+                                                const LoginPage()));
                                   }
                                 }
                               },
@@ -121,7 +119,7 @@ class _ForgetPasswordWidgetState extends State<ForgetPasswordWidget> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const LoginWidget()));
+                                              const LoginPage()));
                                 },
                                 style: ButtonStyle(
                                     backgroundColor:
