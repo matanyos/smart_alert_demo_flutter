@@ -1,14 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:provider/provider.dart';
-import 'package:smart_alert_demo_flutter/utilitites/navigation_provider.dart';
 import 'package:smart_alert_demo_flutter/utilitites/platform_info.dart';
 import 'package:smart_alert_demo_flutter/widgets/footer.dart';
-import 'package:smart_alert_demo_flutter/widgets/login_widget.dart';
-
-import '../utilitites/utilities.dart';
-import 'my_progress_view.dart';
+import 'package:smart_alert_demo_flutter/widgets/navigation_drawer.dart';
+import '../Enums/app_menu_item.dart';
+import '../widgets/main_pages/login_page.dart';
+import 'utilities.dart';
 
 class WidgetHelper {
   static Widget buildHeader(BuildContext context) {
@@ -26,7 +23,8 @@ class WidgetHelper {
         ));
   }
 
-  static Widget buildMenuItems(BuildContext context) {
+  static Widget buildMenuItems(
+      {required BuildContext context, required AppMenuItem selectedItem}) {
     var isMobile = PlatformInfo(context).isMobile();
     double spacing = isMobile ? 5 : 20;
     return Column(
@@ -35,27 +33,31 @@ class WidgetHelper {
             title: 'MY PROGRESS',
             menuItem: AppMenuItem.myProgress,
             icon: Icons.assessment,
-            context: context),
+            context: context,
+            isSelected: selectedItem == AppMenuItem.myProgress),
         SizedBox(height: spacing),
         createMenuItem(
             title: 'PROFILE',
             menuItem: AppMenuItem.profile,
             icon: Icons.person,
-            context: context),
+            context: context,
+            isSelected: selectedItem == AppMenuItem.profile),
         SizedBox(height: spacing),
         createMenuItem(
             title: 'USERS',
             menuItem: AppMenuItem.users,
             icon: Icons.people,
-            context: context),
+            context: context,
+            isSelected: selectedItem == AppMenuItem.users),
         SizedBox(height: spacing * 2),
         const Divider(color: Colors.white),
         SizedBox(height: spacing * 2),
         createMenuItem(
             title: 'Sync',
-            menuItem: AppMenuItem._sync,
+            menuItem: AppMenuItem.sync,
             icon: Icons.sync,
-            context: context),
+            context: context,
+            isSelected: selectedItem == AppMenuItem.sync),
         SizedBox(height: spacing),
         createMenuItem(
             title: 'Support',
@@ -70,6 +72,7 @@ class WidgetHelper {
               Utilities.openBrowserUrl(url: url);
             },
             context: context,
+            isSelected: false,
             support: true),
         SizedBox(height: spacing),
         createMenuItem(
@@ -78,10 +81,11 @@ class WidgetHelper {
             icon: Icons.logout,
             onTapFunction: () async {
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const LoginWidget()));
+                  MaterialPageRoute(builder: (context) => const LoginPage()));
               await Hive.box('myBox').delete('userInfo');
             },
-            context: context),
+            context: context,
+            isSelected: false),
       ],
     );
   }
@@ -92,19 +96,12 @@ class WidgetHelper {
       Function? onTapFunction,
       required IconData icon,
       required BuildContext context,
+      required bool isSelected,
       bool support = false}) {
-    double fontSize = (defaultTargetPlatform == TargetPlatform.iOS ||
-            defaultTargetPlatform == TargetPlatform.android)
-        ? 15
-        : 20;
-    double leftPadding = (defaultTargetPlatform == TargetPlatform.iOS ||
-            defaultTargetPlatform == TargetPlatform.android)
-        ? 20
-        : 50;
+    var isMobile = PlatformInfo(context).isMobile();
 
-    final provider = Provider.of<NavigationProvider>(context);
-    final currentItem = provider.navigationItem;
-    final isSelected = menuItem == currentItem;
+    double fontSize = isMobile ? 15 : 20;
+    double leftPadding = isMobile ? 20 : 50;
 
     return Padding(
       padding: EdgeInsets.only(left: leftPadding),
@@ -143,32 +140,15 @@ class WidgetHelper {
                 if (onTapFunction != null) {
                   onTapFunction.call();
                 } else {
-                  if (defaultTargetPlatform == TargetPlatform.iOS ||
-                      defaultTargetPlatform == TargetPlatform.android) {
+                  if (isMobile) {
                     Navigator.pop(context);
                   }
-                  provider.setCurrentAppMenuItem(menuItem);
+                  //provider.setCurrentAppMenuItem(menuItem);
                 }
               }),
         ),
       ),
     );
-  }
-
-  static Widget getWidgetView(
-      {required AppMenuItem menuItem, required BuildContext context}) {
-    final provider = Provider.of<NavigationProvider>(context);
-    final currentItem = provider.navigationItem;
-
-    if (currentItem == AppMenuItem.myProgress) {
-      return const MyProgressViewWidget();
-    } else if (currentItem == AppMenuItem.profile) {
-      return const Text('Profile');
-    } else if (currentItem == AppMenuItem.users) {
-      return const Text('Users');
-    } else {
-      return const Text('Sync');
-    }
   }
 
   static Widget getFooterWithPadding(
@@ -182,6 +162,33 @@ class WidgetHelper {
       child: Footer(isLoginPage: isLogin),
     );
   }
-}
 
-enum AppMenuItem { myProgress, profile, users, support, _sync, logOut }
+  static Widget getWidgetViewMobileOrWeb(
+      BuildContext context, AppMenuItem selectedItem, Column childWidget) {
+    if (!PlatformInfo(context).isMobile()) {
+      return SafeArea(
+        child: Scaffold(
+            body: Row(children: [
+          NavigationDrawer(selectedItem: selectedItem),
+          Expanded(
+              flex: 5,
+              child: Container(
+                color: Colors.grey.shade200,
+                child: childWidget,
+              ))
+        ])),
+      );
+    } else {
+      return SafeArea(
+          child: Scaffold(
+              appBar: AppBar(
+                title: Image.asset('assets/icon.png', height: 60),
+                centerTitle: true,
+                backgroundColor: const Color.fromARGB(255, 26, 34, 37),
+                toolbarHeight: 70,
+              ),
+              body: Container(color: Colors.grey.shade200, child: childWidget),
+              drawer: NavigationDrawer(selectedItem: selectedItem)));
+    }
+  }
+}

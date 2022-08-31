@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:smart_alert_demo_flutter/Models/login_respone.dart';
+import 'package:smart_alert_demo_flutter/Models/user.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
-import '../Models/user.dart';
+import '../Models/login_credentials.dart';
 import 'encryptor.dart';
 
 class Utilities {
@@ -22,7 +22,7 @@ class Utilities {
     return response.statusCode == 200;
   }
 
-  static Future<LoginResponse?> acquireAccessToken(User user) async {
+  static Future<User?> acquireAccessToken(LoginCredentials user) async {
     var url = Uri.https('dev.api.minuendo.com', 'Security/Login');
     var payload = jsonEncode(user);
     var response = await http.post(url,
@@ -31,19 +31,20 @@ class Utilities {
         },
         body: payload);
 
-    return LoginResponse.fromJson(jsonDecode(response.body));
+    return User.fromJson(jsonDecode(response.body));
   }
 
   static Future<bool> tryLogin(
       {required String email, required String password}) async {
     try {
       var response = await Utilities.acquireAccessToken(
-          User(email: email, password: password));
-      var box = Hive.box('myBox');
+          LoginCredentials(email: email, password: password));
 
       if (response?.authenticationToken == null) return false;
 
       var encrypted = Encryptor().encrypt(value: jsonEncode(response));
+
+      var box = await Hive.openBox('myBox');
       await box.put('userInfo', encrypted);
 
       return true;
@@ -66,17 +67,21 @@ class Utilities {
   }
 
   static Future<bool> checkAccessToken() async {
-    await Hive.initFlutter();
-    var box = await Hive.openBox('myBox');
-    var existedInfo = box.get('userInfo');
-
-    if (existedInfo == null) return false;
-
-    var info = Encryptor().decrypt(value: existedInfo);
-    var userInfo = LoginResponse.fromJson(jsonDecode(info));
+    var user = await getUserInfo();
+    if (user == null) return false;
 
     return await Utilities.isSuccessHttpRequest(
-        token: userInfo.authenticationToken.toString(),
-        userId: userInfo.userId.toString());
+        token: user.authenticationToken.toString(),
+        userId: user.userId.toString());
+  }
+
+  static Future<User?> getUserInfo() async {
+    var box = await Hive.openBox('myBox');
+    var existedInfo = box.get('userInfo');
+    if (existedInfo != null) {
+      var info = Encryptor().decrypt(value: existedInfo);
+      return User.fromJson(jsonDecode(info));
+    }
+    return null;
   }
 }

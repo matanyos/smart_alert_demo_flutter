@@ -22,8 +22,8 @@ class Footer extends StatelessWidget {
             },
             style: ButtonStyle(
                 elevation: MaterialStateProperty.all<double>(0),
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    isLoginPage ? Colors.transparent : Colors.grey.shade200),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.transparent),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
@@ -51,8 +51,8 @@ class Footer extends StatelessWidget {
             },
             style: ButtonStyle(
                 elevation: MaterialStateProperty.all<double>(0),
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    isLoginPage ? Colors.transparent : Colors.grey.shade200),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.transparent),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
