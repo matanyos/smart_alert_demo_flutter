@@ -4,18 +4,13 @@ import 'package:smart_alert_demo_flutter/Enums/app_menu_item.dart';
 import 'package:smart_alert_demo_flutter/Enums/user_access_level.dart';
 import '../../Models/user.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   final User user;
   const HomePage({Key? key, required this.user}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => HomePageState();
-}
-
-class HomePageState extends State<HomePage> {
-  @override
   Widget build(BuildContext context) {
-    var accessLevel = User.getAccessLevel(widget.user);
+    var accessLevel = User.getAccessLevel(user);
     var selectedItem = accessLevel == UserAccessLevel.user
         ? AppMenuItem.myProgress
         : AppMenuItem.team;

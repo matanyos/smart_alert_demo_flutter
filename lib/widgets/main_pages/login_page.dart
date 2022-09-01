@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_alert_demo_flutter/utilitites/platform_info.dart';
 import 'package:smart_alert_demo_flutter/utilitites/utilities.dart';
-import 'package:smart_alert_demo_flutter/widgets/forget_password_widget.dart';
 import 'package:smart_alert_demo_flutter/utilitites/widgets_helper.dart';
 import '../../routes/router.gr.dart';
 import '../sub_widgets/password_field_text.dart';
@@ -142,11 +141,8 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                     ),
                                     onTap: () => {
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const ForgetPasswordWidget()))
+                                      AutoRouter.of(context)
+                                          .pushNamed('/forgot-password')
                                     },
                                   ))),
                           SizedBox(
@@ -201,7 +197,6 @@ class _LoginPageState extends State<LoginPage> {
         if (user != null) {
           router.push(HomeRoute(user: user));
         }
-        // Navigator.of(context).pushReplacementNamed(RouterManager.homePage);
       } else {
         setState(() => wrongCredintials = true);
       }

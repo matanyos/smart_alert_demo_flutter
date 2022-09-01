@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_alert_demo_flutter/utilitites/platform_info.dart';
 import 'package:smart_alert_demo_flutter/utilitites/utilities.dart';
@@ -115,11 +116,7 @@ class _ForgetPasswordWidgetState extends State<ForgetPasswordWidget> {
                             height: 50,
                             child: ElevatedButton(
                                 onPressed: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const LoginPage()));
+                                  AutoRouter.of(context).pushNamed('/login');
                                 },
                                 style: ButtonStyle(
                                     backgroundColor:

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:smart_alert_demo_flutter/utilitites/platform_info.dart';
@@ -25,6 +26,7 @@ class WidgetHelper {
 
   static Widget buildMenuItems(
       {required BuildContext context, required AppMenuItem selectedItem}) {
+    var router = AutoRouter.of(context);
     var isMobile = PlatformInfo(context).isMobile();
     double spacing = isMobile ? 5 : 20;
     return Column(
@@ -34,21 +36,24 @@ class WidgetHelper {
             menuItem: AppMenuItem.myProgress,
             icon: Icons.assessment,
             context: context,
-            isSelected: selectedItem == AppMenuItem.myProgress),
+            isSelected: selectedItem == AppMenuItem.myProgress,
+            onTapFunction: () => router.pushNamed('/me')),
         SizedBox(height: spacing),
         createMenuItem(
             title: 'PROFILE',
             menuItem: AppMenuItem.profile,
             icon: Icons.person,
             context: context,
-            isSelected: selectedItem == AppMenuItem.profile),
+            isSelected: selectedItem == AppMenuItem.profile,
+            onTapFunction: () => router.pushNamed('/profile')),
         SizedBox(height: spacing),
         createMenuItem(
             title: 'USERS',
             menuItem: AppMenuItem.users,
             icon: Icons.people,
             context: context,
-            isSelected: selectedItem == AppMenuItem.users),
+            isSelected: selectedItem == AppMenuItem.users,
+            onTapFunction: () => router.pushNamed('/users')),
         SizedBox(height: spacing * 2),
         const Divider(color: Colors.white),
         SizedBox(height: spacing * 2),
@@ -57,7 +62,8 @@ class WidgetHelper {
             menuItem: AppMenuItem.sync,
             icon: Icons.sync,
             context: context,
-            isSelected: selectedItem == AppMenuItem.sync),
+            isSelected: selectedItem == AppMenuItem.sync,
+            onTapFunction: () => router.pushNamed('/sync')),
         SizedBox(height: spacing),
         createMenuItem(
             title: 'Support',
@@ -164,7 +170,7 @@ class WidgetHelper {
   }
 
   static Widget getWidgetViewMobileOrWeb(
-      BuildContext context, AppMenuItem selectedItem, Column childWidget) {
+      BuildContext context, AppMenuItem selectedItem, Widget childWidget) {
     if (!PlatformInfo(context).isMobile()) {
       return SafeArea(
         child: Scaffold(
