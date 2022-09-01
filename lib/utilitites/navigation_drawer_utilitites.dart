@@ -21,34 +21,38 @@ class NavigationDrawerUtilities {
       {required BuildContext context, required AppMenuItem selectedItem}) {
     var router = AutoRouter.of(context);
     var isMobile = PlatformInfo(context).isMobile();
+    var user = Utilities.getUser();
     double spacing = isMobile ? 5 : 20;
     return Column(
       children: [
-        createMenuItem(
-            title: 'MY PROGRESS',
-            menuItem: AppMenuItem.myProgress,
-            icon: Icons.assessment,
-            context: context,
-            isSelected: selectedItem == AppMenuItem.myProgress,
-            onTapFunction: () => router.pushNamed('/me')),
-        SizedBox(height: spacing),
-        createMenuItem(
-            title: 'PROFILE',
-            menuItem: AppMenuItem.profile,
-            icon: Icons.person,
-            context: context,
-            isSelected: selectedItem == AppMenuItem.profile,
-            onTapFunction: () => router.pushNamed('/profile')),
-        SizedBox(height: spacing),
-        createMenuItem(
-            title: 'USERS',
-            menuItem: AppMenuItem.users,
-            icon: Icons.people,
-            context: context,
-            isSelected: selectedItem == AppMenuItem.users,
-            onTapFunction: () => router.pushNamed('/users')),
-        SizedBox(height: spacing * 2),
-        const Divider(color: Colors.white),
+        if (user != null)
+          createMenuItem(
+              title: 'MY PROGRESS',
+              menuItem: AppMenuItem.myProgress,
+              icon: Icons.assessment,
+              context: context,
+              isSelected: selectedItem == AppMenuItem.myProgress,
+              onTapFunction: () => router.pushNamed('/me')),
+        if (user != null) SizedBox(height: spacing),
+        if (user != null)
+          createMenuItem(
+              title: 'PROFILE',
+              menuItem: AppMenuItem.profile,
+              icon: Icons.person,
+              context: context,
+              isSelected: selectedItem == AppMenuItem.profile,
+              onTapFunction: () => router.pushNamed('/profile')),
+        if (user != null) SizedBox(height: spacing),
+        if (user != null)
+          createMenuItem(
+              title: 'USERS',
+              menuItem: AppMenuItem.users,
+              icon: Icons.people,
+              context: context,
+              isSelected: selectedItem == AppMenuItem.users,
+              onTapFunction: () => router.pushNamed('/users')),
+        if (user != null) SizedBox(height: spacing * 2),
+        if (user != null) const Divider(color: Colors.white),
         SizedBox(height: spacing * 2),
         createMenuItem(
             title: 'Sync',
@@ -74,16 +78,17 @@ class NavigationDrawerUtilities {
             isSelected: false,
             support: true),
         SizedBox(height: spacing),
-        createMenuItem(
-            title: 'Log out',
-            menuItem: AppMenuItem.logOut,
-            icon: Icons.logout,
-            onTapFunction: () async {
-              AutoRouter.of(context).pushNamed('/login');
-              await Hive.box('appBox').delete('userInfo');
-            },
-            context: context,
-            isSelected: false),
+        if (user != null)
+          createMenuItem(
+              title: 'Log out',
+              menuItem: AppMenuItem.logOut,
+              icon: Icons.logout,
+              onTapFunction: () async {
+                AutoRouter.of(context).pushNamed('/login');
+                await Hive.box('appBox').delete('userInfo');
+              },
+              context: context,
+              isSelected: false),
       ],
     );
   }

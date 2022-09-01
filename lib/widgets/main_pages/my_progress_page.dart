@@ -4,8 +4,8 @@ import 'package:smart_alert_demo_flutter/utilitites/widgets_helper.dart';
 
 import '../sub_widgets/custom_elevated_button.dart';
 
-class MyProgress extends StatelessWidget {
-  const MyProgress({
+class MyProgressPage extends StatelessWidget {
+  const MyProgressPage({
     Key? key,
   }) : super(key: key);
 

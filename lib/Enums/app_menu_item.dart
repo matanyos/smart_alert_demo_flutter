@@ -1,1 +1,10 @@
-enum AppMenuItem { myProgress, team, profile, users, support, sync, logOut }
+enum AppMenuItem {
+  myProgress,
+  team,
+  profile,
+  users,
+  admin,
+  support,
+  sync,
+  logOut
+}

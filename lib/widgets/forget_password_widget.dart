@@ -6,16 +6,16 @@ import 'package:smart_alert_demo_flutter/widgets/sub_widgets/smart_alert_app_bar
 import 'package:smart_alert_demo_flutter/utilitites/widgets_helper.dart';
 import 'main_pages/login_page.dart';
 
-class ForgetPasswordWidget extends StatefulWidget {
-  const ForgetPasswordWidget({
+class ForgetPasswordPage extends StatefulWidget {
+  const ForgetPasswordPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<ForgetPasswordWidget> createState() => _ForgetPasswordWidgetState();
+  State<ForgetPasswordPage> createState() => _ForgetPasswordPageState();
 }
 
-class _ForgetPasswordWidgetState extends State<ForgetPasswordWidget> {
+class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
   TextEditingController emailTextFieldController = TextEditingController();
 
   bool wrongCredintials = false;
