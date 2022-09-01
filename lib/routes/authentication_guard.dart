@@ -4,9 +4,8 @@ import 'package:smart_alert_demo_flutter/utilitites/utilities.dart';
 
 class AuthGuard extends AutoRouteGuard {
   @override
-  Future<void> onNavigation(
-      NavigationResolver resolver, StackRouter router) async {
-    var user = await Utilities.getUserInfo();
+  void onNavigation(NavigationResolver resolver, StackRouter router) {
+    var user = Utilities.getUser();
     if (user != null) {
       resolver.next(true);
     } else {

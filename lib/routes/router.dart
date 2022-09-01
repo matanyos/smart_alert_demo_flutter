@@ -10,7 +10,12 @@ import 'authentication_guard.dart';
 @AdaptiveAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    AutoRoute(page: HomePage, path: '/', initial: true, guards: [AuthGuard]),
+    AutoRoute(
+      page: HomePage,
+      path: '/',
+      initial: true,
+      guards: [AuthGuard],
+    ),
     AutoRoute(page: MyProgress, path: '/me', guards: [AuthGuard]),
     AutoRoute(page: Team, path: '/team', guards: [AuthGuard]),
     AutoRoute(page: ProfilePage, path: '/profile', guards: [AuthGuard]),

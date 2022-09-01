@@ -6,6 +6,7 @@ import 'package:smart_alert_demo_flutter/routes/router.gr.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
+  await Hive.openBox('appBox');
   runApp(const MyApp());
 }
 

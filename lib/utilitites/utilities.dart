@@ -44,7 +44,7 @@ class Utilities {
 
       var encrypted = Encryptor().encrypt(value: jsonEncode(response));
 
-      var box = await Hive.openBox('myBox');
+      var box = await Hive.openBox('appBox');
       await box.put('userInfo', encrypted);
 
       return true;
@@ -67,7 +67,7 @@ class Utilities {
   }
 
   static Future<bool> checkAccessToken() async {
-    var user = await getUserInfo();
+    var user = getUser();
     if (user == null) return false;
 
     return await Utilities.isSuccessHttpRequest(
@@ -75,8 +75,8 @@ class Utilities {
         userId: user.userId.toString());
   }
 
-  static Future<User?> getUserInfo() async {
-    var box = await Hive.openBox('myBox');
+  static User? getUser() {
+    var box = Hive.box('appBox');
     var existedInfo = box.get('userInfo');
     if (existedInfo != null) {
       var info = Encryptor().decrypt(value: existedInfo);

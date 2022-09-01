@@ -13,7 +13,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i7;
 import 'package:flutter/material.dart' as _i8;
-import 'package:smart_alert_demo_flutter/Models/user.dart' as _i10;
 import 'package:smart_alert_demo_flutter/routes/authentication_guard.dart'
     as _i9;
 import 'package:smart_alert_demo_flutter/widgets/forget_password_widget.dart'
@@ -40,10 +39,8 @@ class AppRouter extends _i7.RootStackRouter {
   @override
   final Map<String, _i7.PageFactory> pagesMap = {
     HomeRoute.name: (routeData) {
-      final args = routeData.argsAs<HomeRouteArgs>();
       return _i7.AdaptivePage<dynamic>(
-          routeData: routeData,
-          child: _i1.HomePage(key: args.key, user: args.user));
+          routeData: routeData, child: const _i1.HomePage());
     },
     MyProgress.name: (routeData) {
       return _i7.AdaptivePage<dynamic>(
@@ -85,25 +82,10 @@ class AppRouter extends _i7.RootStackRouter {
 
 /// generated route for
 /// [_i1.HomePage]
-class HomeRoute extends _i7.PageRouteInfo<HomeRouteArgs> {
-  HomeRoute({_i8.Key? key, required _i10.User user})
-      : super(HomeRoute.name,
-            path: '/', args: HomeRouteArgs(key: key, user: user));
+class HomeRoute extends _i7.PageRouteInfo<void> {
+  const HomeRoute() : super(HomeRoute.name, path: '/');
 
   static const String name = 'HomeRoute';
-}
-
-class HomeRouteArgs {
-  const HomeRouteArgs({this.key, required this.user});
-
-  final _i8.Key? key;
-
-  final _i10.User user;
-
-  @override
-  String toString() {
-    return 'HomeRouteArgs{key: $key, user: $user}';
-  }
 }
 
 /// generated route for

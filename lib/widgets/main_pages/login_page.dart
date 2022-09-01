@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:smart_alert_demo_flutter/utilitites/platform_info.dart';
 import 'package:smart_alert_demo_flutter/utilitites/utilities.dart';
 import 'package:smart_alert_demo_flutter/utilitites/widgets_helper.dart';
-import '../../routes/router.gr.dart';
 import '../sub_widgets/password_field_text.dart';
 import '../sub_widgets/smart_alert_app_bar.dart';
 
@@ -193,9 +192,9 @@ class _LoginPageState extends State<LoginPage> {
           password: passwordTextFieldController.text)) {
         var router = AutoRouter.of(context);
 
-        var user = await Utilities.getUserInfo();
+        var user = Utilities.getUser();
         if (user != null) {
-          router.push(HomeRoute(user: user));
+          router.pushNamed('/');
         }
       } else {
         setState(() => wrongCredintials = true);
